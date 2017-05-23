@@ -9,9 +9,12 @@ namespace vega_demo.Persistence
         public DbSet<Model> Models { get; set; }
         public DbSet<Feature> Features { get; set; }
         
-        public VegaDbContext(DbContextOptions<VegaDbContext> options) : base(options)
+        public VegaDbContext(DbContextOptions<VegaDbContext> options) : base(options) {}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<VehicleFeature>()
+                .HasKey(vf => new { vf.VehicleId, vf.FeatureId});
         }
     }
 }

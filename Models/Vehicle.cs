@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vega_demo.Models
 {
+    [Table("Vehicles")]
     public class Vehicle
     {
         public int Id { get; set; }
@@ -19,5 +23,11 @@ namespace vega_demo.Models
         [StringLength(255)]
         public string ContactEmail { get; set; }
         public DateTime LastUpdate { get; set; }
+        public ICollection<VehicleFeature> Features { get; set; }
+
+        public Vehicle()
+        {
+            Features = new Collection<VehicleFeature>();
+        }
     }
 }

@@ -8,9 +8,10 @@ using vega_demo.Persistence;
 namespace VegaDemo.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    partial class VegaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170523140740_AddVehicleFeatureModel")]
+    partial class AddVehicleFeatureModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
