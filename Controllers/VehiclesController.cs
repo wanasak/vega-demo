@@ -42,5 +42,24 @@ namespace vega_demo.Controllers
 
             return Ok(result);
         }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody]VehicleResource vehicleResource)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var vehicle = await context.Vehicles.FindAsync(id);
+            
+            if (vehicle == null) return NotFound();
+
+            mapper.Map<VehicleResource, Vehicle>(vehicleResource);
+            vehicle.LastUpdate = DateTime.Now;
+
+            await context.SaveChangesAsync();
+
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+
+            return Ok(result);
+        }
     }
 }
