@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using vega_demo.Controllers.Resources;
 using vega_demo.Models;
 using vega_demo.Persistence;
@@ -48,7 +49,7 @@ namespace vega_demo.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var vehicle = await context.Vehicles.FindAsync(id);
+            var vehicle = await context.Vehicles.Include(m => m.Features).SingleOrDefaultAsync(v => v.Id == vehicleResource.Id);
             
             if (vehicle == null) return NotFound();
 
