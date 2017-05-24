@@ -32,6 +32,7 @@ namespace WebApplicationBasic
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper();
 
