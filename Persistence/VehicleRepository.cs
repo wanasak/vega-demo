@@ -27,6 +27,7 @@ namespace vega_demo.Persistence
                     .Include(v => v.Features)
                         .ThenInclude(vf => vf.Feature)
                     .Include(v => v.Model)
+                        .ThenInclude(m => m.Make)
                     .SingleOrDefaultAsync(v => v.Id == id);
         }
 
