@@ -1,4 +1,4 @@
-import * as _ from 'underscore'; 
+import * as _ from 'underscore';
 import { VehicleService } from './../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastyService } from "ng2-toasty";
@@ -53,8 +53,10 @@ export class VehicleFormComponent implements OnInit {
       .subscribe(data => {
         this.makes = data[0];
         this.features = data[1];
-        if (this.vehicle.id > 0)
+        if (this.vehicle.id > 0) {
           this.setVehicle(data[2]);
+          this.populateModels();
+        }
       }, err => {
         if (err.status == 404)
           this.router.navigate(['/home']);
@@ -76,7 +78,6 @@ export class VehicleFormComponent implements OnInit {
   }
 
   private setVehicle(v: Vehicle) {
-    console.log(v);
     this.vehicle.id = v.id;
     this.vehicle.makeId = v.make.id;
     this.vehicle.modelId = v.model.id;
@@ -85,9 +86,13 @@ export class VehicleFormComponent implements OnInit {
     this.vehicle.features = _.pluck(v.features, 'id');
   }
 
-  onMakeChange() {
+  private populateModels() {
     var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
+  }
+
+  onMakeChange() {
+    this.populateModels();
     delete this.vehicle.modelId;
   }
 
