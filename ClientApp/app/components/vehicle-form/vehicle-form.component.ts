@@ -106,8 +106,21 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.createVehicle(this.vehicle)
+    if (this.vehicle.id > 0) {
+      this.vehicleService.updateVehcle(this.vehicle)
+        .subscribe(v => {
+          this.toastyService.success({
+            title: 'Success',
+            msg: 'The vehicle was successfully updated.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 3000
+          });
+        });
+    } else {
+      this.vehicleService.createVehicle(this.vehicle)
       .subscribe(v => console.log(v));
+    }
   }
 
 }
