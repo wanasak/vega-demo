@@ -1,4 +1,4 @@
-import { ErrorHandler, Inject, NgZone } from "@angular/core";
+import { ErrorHandler, Inject, NgZone, isDevMode } from "@angular/core";
 import { ToastyService } from "ng2-toasty";
 
 export class AppErrorHanlder implements ErrorHandler {
@@ -6,6 +6,7 @@ export class AppErrorHanlder implements ErrorHandler {
     constructor(@Inject(ToastyService) private toastyService: ToastyService, private ngZone: NgZone) { }
 
     handleError(error: any): void {
+        if (isDevMode) console.error(error);
         this.ngZone.run(() => {
                 this.toastyService.error({
                 title: 'Error',
