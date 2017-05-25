@@ -1,6 +1,6 @@
 import { VehicleService } from './services/vehicle.service';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UniversalModule } from 'angular2-universal';
 import { AppComponent } from './components/app/app.component'
@@ -10,6 +10,7 @@ import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { ToastyModule } from 'ng2-toasty';
+import { AppErrorHanlder } from "./app.error-handler";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -35,6 +36,7 @@ import { ToastyModule } from 'ng2-toasty';
         ])
     ],
     providers: [
+        { provide: ErrorHandler, useClass: AppErrorHanlder },
         VehicleService
     ]
 })

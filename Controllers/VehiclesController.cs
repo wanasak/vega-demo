@@ -26,6 +26,8 @@ namespace vega_demo.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody]SaveVehicleResource vehicleResource)
         {
+            // throw new Exception(); // for testing error
+
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             // Low priority
