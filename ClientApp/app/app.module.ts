@@ -12,6 +12,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
 import { ToastyModule } from 'ng2-toasty';
 import { AppErrorHanlder } from "./app.error-handler";
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import { PaginationComponent } from "./components/shared/pagination.component";
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -22,7 +23,8 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
         FetchDataComponent,
         HomeComponent,
         VehicleFormComponent,
-        VehicleListComponent
+        VehicleListComponent,
+        PaginationComponent
     ],
     imports: [
         FormsModule,
