@@ -18,20 +18,23 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Id</th>
-      <th (click)="sortBy('make')">
-        <span *ngIf="query.sortBy === 'make'" class="glyphicon" 
-        [class.glyphicon-sort-by-attributes]="query.isSortAscending"
-        [class.glyphicon-sort-by-attributes-alt]="!query.isSortAscending"></span> Make
+      <!--<th>Id</th>-->
+      <th *ngFor="let c of columns">
+        <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+          <span *ngIf="query.sortBy === c.key" class="glyphicon" 
+          [class.glyphicon-triangle-top]="query.isSortAscending"
+          [class.glyphicon-triangle-bottom]="!query.isSortAscending"></span> {{ c.title }}
+        </div>
+        <div *ngIf="!c.isSortable">{{ c.title }}</div>
       </th>
-      <th (click)="sortBy('model')">
+      <!--<th (click)="sortBy('model')">
         <span *ngIf="query.sortBy == 'model' && query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes"></span>
         <span *ngIf="query.sortBy == 'model' && !query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes-alt"></span> Model
       </th>
       <th (click)="sortBy('contactName')">
         <span *ngIf="query.sortBy == 'contactName' && query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes"></span>
         <span *ngIf="query.sortBy == 'contactName' && !query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes-alt"></span> Contact Name
-      </th>
+      </th>-->
       <th></th>
     </tr>
   </thead>
