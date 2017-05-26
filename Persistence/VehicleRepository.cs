@@ -40,8 +40,10 @@ namespace vega_demo.Persistence
             context.Vehicles.Remove(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery queryObj)
+        public async Task<QueryResult<Vehicle>> GetVehicles(VehicleQuery queryObj)
         {
+            var result = new QueryResult<Vehicle>();
+
             var query = context.Vehicles
                 .Include(v => v.Features)
                     .ThenInclude(vf => vf.Feature)
@@ -60,6 +62,8 @@ namespace vega_demo.Persistence
                 // ["id"] = v => v.Id // EF automatically added this order
             };
 
+            result.TotalItems = await query.CountAsync();
+
             query = query.ApplyOrdering(queryObj, columnsMap);
 
             query = query.ApplyPaging(queryObj);
@@ -73,7 +77,9 @@ namespace vega_demo.Persistence
             // if (queryObj.SortBy == "id")
             //     query = (queryObj.IsSortAscending) ? query.OrderBy(x => x.Id) : query.OrderByDescending(x => x.Id);
 
-            return await query.ToListAsync();
+            result.Items = await query.ToListAsync();
+
+            return result;
         }
     }
 }
