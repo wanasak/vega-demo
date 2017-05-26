@@ -119,7 +119,9 @@ export class VehicleFormComponent implements OnInit {
         });
     } else {
       this.vehicleService.createVehicle(this.vehicle)
-      .subscribe(v => console.log(v));
+      .subscribe(v => {
+        this.router.navigate(['/vehicles']);
+      });
     }
   }
 
@@ -127,7 +129,7 @@ export class VehicleFormComponent implements OnInit {
     if (confirm('Are you sure?')) {
       this.vehicleService.deleteVehicle(this.vehicle.id)
         .subscribe(v => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/vehicles']);
         });
     }
   }
