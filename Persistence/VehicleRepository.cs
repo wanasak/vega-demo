@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using vega_demo.Extensions;
 using vega_demo.Models;
 
 namespace vega_demo.Persistence
@@ -39,14 +40,6 @@ namespace vega_demo.Persistence
             context.Vehicles.Remove(vehicle);
         }
 
-        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnsMap)
-        {
-            if (queryObj.IsSortAscending)
-                return query.OrderBy(columnsMap[queryObj.SortBy]);
-            else
-                return query.OrderByDescending(columnsMap[queryObj.SortBy]);
-        }
-
         public async Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery queryObj)
         {
             var query = context.Vehicles
@@ -63,11 +56,11 @@ namespace vega_demo.Persistence
             {
                 ["make"] = v => v.Model.Make.Name,
                 ["model"] = v => v.Model.Name,
-                ["contactName"] = v => v.ContactName,
-                ["id"] = v => v.Id,
+                ["contactName"] = v => v.ContactName
+                // ["id"] = v => v.Id // EF automatically added this order
             };
 
-            query = this.ApplyOrdering(queryObj, query, columnsMap);
+            query = query.ApplyOrdering(queryObj, columnsMap);
 
             // if (queryObj.SortBy == "make")
             //     query = (queryObj.IsSortAscending) ? query.OrderBy(x => x.Model.Make.Name) : query.OrderByDescending(x => x.Model.Make.Name);  
