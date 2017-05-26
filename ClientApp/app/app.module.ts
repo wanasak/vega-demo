@@ -11,6 +11,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { ToastyModule } from 'ng2-toasty';
 import { AppErrorHanlder } from "./app.error-handler";
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -20,15 +21,17 @@ import { AppErrorHanlder } from "./app.error-handler";
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        VehicleFormComponent
+        VehicleFormComponent,
+        VehicleListComponent
     ],
     imports: [
         FormsModule,
         ToastyModule.forRoot(),
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
+            { path: 'vehicles', component: VehicleListComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/edit/:id', component: VehicleFormComponent },
             { path: 'counter', component: CounterComponent },
