@@ -106,23 +106,35 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    if (this.vehicle.id > 0) {
-      this.vehicleService.updateVehcle(this.vehicle)
-        .subscribe(v => {
-          this.toastyService.success({
-            title: 'Success',
-            msg: 'The vehicle was successfully updated.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
-        });
-    } else {
-      this.vehicleService.createVehicle(this.vehicle)
-      .subscribe(v => {
-        this.router.navigate(['/vehicles']);
+    // variables with $ is use to indicate that this is an observable
+    var result$ = (this.vehicle.id) ? this.vehicleService.updateVehcle(this.vehicle) : this.vehicleService.createVehicle(this.vehicle);
+    result$.subscribe(vehicle => {
+      this.toastyService.success({
+        title: 'Success',
+        msg: 'The vehicle was successfully saved.',
+        theme: 'bootstrap',
+        showClose: true,
+        timeout: 3000
       });
-    }
+      this.router.navigate(['/vehicles/', vehicle.id]);
+    });
+    // if (this.vehicle.id > 0) {
+    //   this.vehicleService.updateVehcle(this.vehicle)
+    //     .subscribe(v => {
+    //       this.toastyService.success({
+    //         title: 'Success',
+    //         msg: 'The vehicle was successfully updated.',
+    //         theme: 'bootstrap',
+    //         showClose: true,
+    //         timeout: 3000
+    //       });
+    //     });
+    // } else {
+    //   this.vehicleService.createVehicle(this.vehicle)
+    //     .subscribe(v => {
+    //       this.router.navigate(['/vehicles']);
+    //     });
+    // }
   }
 
   delete(id) {
