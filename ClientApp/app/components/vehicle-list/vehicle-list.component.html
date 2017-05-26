@@ -20,8 +20,9 @@
     <tr>
       <th>Id</th>
       <th (click)="sortBy('make')">
-        <span *ngIf="query.sortBy == 'make' && query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes"></span>
-        <span *ngIf="query.sortBy == 'make' && !query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes-alt"></span> Make
+        <span *ngIf="query.sortBy === 'make'" class="glyphicon" 
+        [class.glyphicon-sort-by-attributes]="query.isSortAscending"
+        [class.glyphicon-sort-by-attributes-alt]="!query.isSortAscending"></span> Make
       </th>
       <th (click)="sortBy('model')">
         <span *ngIf="query.sortBy == 'model' && query.isSortAscending" class="glyphicon glyphicon-sort-by-attributes"></span>
