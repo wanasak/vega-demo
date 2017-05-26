@@ -7,10 +7,12 @@ import { Vehicle, KeyPairValue } from "../../models/vehicle";
   templateUrl: './vehicle-list.component.html'
 })
 export class VehicleListComponent implements OnInit {
+
+  private readonly PAGE_SIZE = 3;
   queryResult: any = {};
   makes: any[];
   query: any = {
-    pageSize: 5
+    pageSize: this.PAGE_SIZE
   };
   columns = [
     { title: 'Id' },
@@ -45,12 +47,17 @@ export class VehicleListComponent implements OnInit {
     // this.vehicles = vehicles;
 
     // Server side filter
+    this.query.page = 1;
     this.populateVehicles();
   }
 
   resetFilter() {
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    // this.onFilterChange();
+    this.populateVehicles();
   }
 
   sortBy(columnName) {
