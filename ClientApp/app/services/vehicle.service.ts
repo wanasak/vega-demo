@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class VehicleService {
+  private readonly vehiclesEndpoint = '/api/vehicles';
 
   constructor(private http: Http) { }
 
@@ -19,27 +20,27 @@ export class VehicleService {
   }
 
   createVehicle(vehicle) {
-    return this.http.post('/api/vehicles', vehicle)
+    return this.http.post(this.vehiclesEndpoint, vehicle)
       .map(res => res.json());
   }
 
   getVehicle(id) {
-    return this.http.get('/api/vehicles/' + id)
+    return this.http.get(this.vehiclesEndpoint + '/' + id)
       .map(res => res.json());
   }
 
   getVehicles() {
-    return this.http.get('/api/vehicles')
+    return this.http.get(this.vehiclesEndpoint)
       .map(res => res.json());
   }
 
   updateVehcle(vehicle: SaveVehicle) {
-    return this.http.put('/api/vehicles/' + vehicle.id, vehicle)
+    return this.http.put(this.vehiclesEndpoint + '/' + vehicle.id, vehicle)
       .map(res => res.json());
   }
 
   deleteVehicle(id) {
-    return this.http.delete('/api/vehicles/' + id)
+    return this.http.delete(this.vehiclesEndpoint + '/' + id)
       .map(res => res.json());
   }
 
