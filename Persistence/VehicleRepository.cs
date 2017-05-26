@@ -62,6 +62,8 @@ namespace vega_demo.Persistence
 
             query = query.ApplyOrdering(queryObj, columnsMap);
 
+            query = query.ApplyPaging(queryObj);
+
             // if (queryObj.SortBy == "make")
             //     query = (queryObj.IsSortAscending) ? query.OrderBy(x => x.Model.Make.Name) : query.OrderByDescending(x => x.Model.Make.Name);  
             // if (queryObj.SortBy == "model")
