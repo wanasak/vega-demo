@@ -13,6 +13,7 @@ import { ToastyModule } from 'ng2-toasty';
 import { AppErrorHanlder } from "./app.error-handler";
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { PaginationComponent } from "./components/shared/pagination.component";
+import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.component';
 
 @NgModule({
     bootstrap: [ AppComponent ],
@@ -24,7 +25,8 @@ import { PaginationComponent } from "./components/shared/pagination.component";
         HomeComponent,
         VehicleFormComponent,
         VehicleListComponent,
-        PaginationComponent
+        PaginationComponent,
+        VehicleViewComponent
     ],
     imports: [
         FormsModule,
@@ -36,6 +38,7 @@ import { PaginationComponent } from "./components/shared/pagination.component";
             { path: 'vehicles', component: VehicleListComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+            { path: 'vehicles/:id', component: VehicleViewComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
