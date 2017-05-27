@@ -22,21 +22,24 @@
         </ul>
         <h2>Contact</h2>
         <ul>
-          <li>Contact Name: {{ vehicle.contact.name }}</li>
-          <li>Contact Phone: {{ vehicle.contact.phone }}</li>
-          <li>Contact Email: {{ vehicle.contact.email }}</li>
+            <li>Contact Name: {{ vehicle.contact.name }}</li>
+            <li>Contact Phone: {{ vehicle.contact.phone }}</li>
+            <li>Contact Email: {{ vehicle.contact.email }}</li>
         </ul>
         <br />
         <p>
-          <a [routerLink]="['/vehicles/edit', vehicle.id]" class="btn btn-default">Edit</a>
-          <button (click)="delete()" type="button" class="btn btn-danger">Delete</button>
-          <a [routerLink]="['/vehicles']" class="btn btn-default">View All Vehicles</a>
+            <a [routerLink]="['/vehicles/edit', vehicle.id]" class="btn btn-default">Edit</a>
+            <button (click)="delete()" type="button" class="btn btn-danger">Delete</button>
+            <a [routerLink]="['/vehicles']" class="btn btn-default">View All Vehicles</a>
         </p>
     </div>
     <!-- Photos tab -->
     <div role="tabpanel" class="tab-pane" id="photos">
         <h2>Photos</h2>
         <input type="file" (change)="uploadPhoto()" #fileInput>
+        <div class="progress" *ngIf="progress && progress.percentage < 100">
+            <div class="progress-bar" [style.width]="progress.percentage + '%'"><span class="sr-only">{{ progress.procentage }} $ Complete</span></div>
+        </div>
         <img *ngFor="let photo of photos" src="/uploads/{{ photo.fileName }}" class="img-thumbnail">
     </div>
 </div>
