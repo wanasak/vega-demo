@@ -61,8 +61,6 @@ export class VehicleViewComponent implements OnInit {
   }
 
   uploadPhoto() {
-    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-
     this.progressService.startTracking()
       .subscribe(progress => {
         console.log(progress);
@@ -71,7 +69,9 @@ export class VehicleViewComponent implements OnInit {
       null,
       () => this.progress = null);
 
-    this.photoService.upload(this.vehicleId, nativeElement.files[0])
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+    var file = nativeElement.files[0];
+    this.photoService.upload(this.vehicleId, file)
       .subscribe(photo => {
         this.toastyService.success({
           title: 'Success',
@@ -81,6 +81,15 @@ export class VehicleViewComponent implements OnInit {
           timeout: 3000
         });
         this.photos.push(photo);
+        nativeElement.value = '';
+      }, err => {
+        this.toastyService.error({
+          title: 'Error',
+          msg: err.text(),
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 3000
+        });
       });
   }
 

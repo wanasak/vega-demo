@@ -3,12 +3,11 @@ import { ToastyService } from "ng2-toasty";
 
 export class AppErrorHanlder implements ErrorHandler {
 
-    constructor(@Inject(ToastyService) private toastyService: ToastyService, private ngZone: NgZone) { }
+    constructor( @Inject(ToastyService) private toastyService: ToastyService, private ngZone: NgZone) { }
 
     handleError(error: any): void {
-        if (isDevMode) console.error(error);
         this.ngZone.run(() => {
-                this.toastyService.error({
+            this.toastyService.error({
                 title: 'Error',
                 msg: 'An unexpected error happened.',
                 theme: 'bootstrap',
@@ -16,5 +15,6 @@ export class AppErrorHanlder implements ErrorHandler {
                 timeout: 3000
             });
         });
+        if (isDevMode) console.error(error);
     }
 }
