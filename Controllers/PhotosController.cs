@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using vega_demo.Controllers.Resources;
 using vega_demo.Models;
 using vega_demo.Persistence;
@@ -19,19 +20,22 @@ namespace vega_demo.Controllers
         private readonly IVehicleRepository vehicleRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
-        private readonly int MAX_BYTES = 1 * 1024 * 1024;
-        private readonly string[] ACCEPTED_FILE_TYPES = new string[] { ".jpg", ".jpeg", ".png" };
+        // private readonly int MAX_BYTES = 1 * 1024 * 1024;
+        // private readonly string[] ACCEPTED_FILE_TYPES = new string[] { ".jpg", ".jpeg", ".png" };
+        private readonly PhotoSetting photoSettings;
 
         public PhotosController(
             IHostingEnvironment host,
             IVehicleRepository vehicleRepository,
             IUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            IOptionsSnapshot<PhotoSetting> options)
         {
             this.vehicleRepository = vehicleRepository;
             this.host = host;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.photoSettings = options.Value;
         }
         [HttpPost]
         public async Task<IActionResult> Upload(int vehicleId, IFormFile file)
@@ -41,8 +45,8 @@ namespace vega_demo.Controllers
 
             if (file == null) return BadRequest("Null file");
             if (file.Length == 0) return BadRequest("Empty file");
-            if (file.Length > MAX_BYTES) return BadRequest("Max file size");
-            if (!ACCEPTED_FILE_TYPES.Any(x => x == Path.GetExtension(file.FileName))) return BadRequest("Invalid file type.");
+            if (file.Length > photoSettings.MaxBytes) return BadRequest("Max file size");
+            if (!photoSettings.IsSupportedFileType(file.FileName)) return BadRequest("Invalid file type.");
 
             var uploadFolderPath = Path.Combine(host.WebRootPath, "uploads");
             if (!Directory.Exists(uploadFolderPath))
