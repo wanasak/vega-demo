@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,20 +24,31 @@ namespace vega_demo.Controllers
         // private readonly int MAX_BYTES = 1 * 1024 * 1024;
         // private readonly string[] ACCEPTED_FILE_TYPES = new string[] { ".jpg", ".jpeg", ".png" };
         private readonly PhotoSetting photoSettings;
+        private readonly IPhotoRepository photoRepository;
 
         public PhotosController(
             IHostingEnvironment host,
             IVehicleRepository vehicleRepository,
+            IPhotoRepository photoRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IOptionsSnapshot<PhotoSetting> options)
         {
             this.vehicleRepository = vehicleRepository;
+            this.photoRepository = photoRepository;
             this.host = host;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.photoSettings = options.Value;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPhotos(int vehicleId)
+        {
+            var photos = await this.photoRepository.GetPhotos(vehicleId);
+            return Ok(mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Upload(int vehicleId, IFormFile file)
         {
