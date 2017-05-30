@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using vega_demo.Persistence;
 using AutoMapper;
 using vega_demo.Models;
+using vega_demo.Core.Services;
+using vega_demo.Core;
 
 namespace WebApplicationBasic
 {
@@ -36,6 +38,8 @@ namespace WebApplicationBasic
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IPhotoStorage, PhotoStorage>();
 
             services.AddAutoMapper();
 
