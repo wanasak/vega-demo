@@ -51,8 +51,9 @@ namespace vega_demo.Persistence
                     .ThenInclude(m => m.Make)
                 .AsQueryable();
 
-            if (queryObj.MakeId.HasValue)
-                query = query.Where(x => x.Model.Make.Id == queryObj.MakeId);
+            // if (queryObj.MakeId.HasValue)
+            //     query = query.Where(x => x.Model.Make.Id == queryObj.MakeId);
+            query = query.ApplyFiltering(queryObj);
 
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
             {
@@ -61,10 +62,9 @@ namespace vega_demo.Persistence
                 ["contactName"] = v => v.ContactName
                 // ["id"] = v => v.Id // EF automatically added this order
             };
-
-            result.TotalItems = await query.CountAsync();
-
             query = query.ApplyOrdering(queryObj, columnsMap);
+            
+            result.TotalItems = await query.CountAsync();
 
             query = query.ApplyPaging(queryObj);
 
