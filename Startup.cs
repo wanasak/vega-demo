@@ -38,8 +38,8 @@ namespace WebApplicationBasic
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IPhotoService, PhotoService>();
-            services.AddScoped<IPhotoStorage, PhotoStorage>();
+            services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IPhotoStorage, PhotoStorage>();
 
             services.AddAutoMapper();
 
