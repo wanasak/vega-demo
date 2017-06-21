@@ -20,7 +20,7 @@ namespace vega_demo.Controllers
     {
         private readonly IHostingEnvironment host;
         private readonly IVehicleRepository vehicleRepository;
-        private readonly IUnitOfWork unitOfWork;
+        // private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         // private readonly int MAX_BYTES = 1 * 1024 * 1024;
         // private readonly string[] ACCEPTED_FILE_TYPES = new string[] { ".jpg", ".jpeg", ".png" };
@@ -33,7 +33,7 @@ namespace vega_demo.Controllers
             IVehicleRepository vehicleRepository,
             IPhotoRepository photoRepository,
             IPhotoService photoService,
-            IUnitOfWork unitOfWork,
+            // IUnitOfWork unitOfWork,
             IMapper mapper,
             IOptionsSnapshot<PhotoSetting> options)
         {
@@ -41,7 +41,7 @@ namespace vega_demo.Controllers
             this.photoRepository = photoRepository;
             this.photoService = photoService;
             this.host = host;
-            this.unitOfWork = unitOfWork;
+            // this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.photoSettings = options.Value;
         }
